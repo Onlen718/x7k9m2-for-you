@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Her ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a2a, #1a1a4a);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #87CEEB;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(135, 206, 235, 0.5);
+        }
+
+        .subtitle {
+            color: #FFD700;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .heart {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #87CEEB, #FFD700);
+            clip-path: path('M75,135 C75,135 0,80 0,40 C0,15 20,0 40,0 C55,0 70,10 75,25 C80,10 95,0 110,0 C130,0 150,15 150,40 C150,80 75,135 75,135 Z');
+            animation: pulse 1.5s infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .heart.active {
+            animation: glow 0.5s;
+        }
+
+        @keyframes glow {
+            0% { filter: brightness(1); }
+            50% { filter: brightness(2); box-shadow: 0 0 50px #87CEEB; }
+            100% { filter: brightness(1); }
+        }
+
+        .button {
+            background: linear-gradient(135deg, #87CEEB, #4A90D9);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(135, 206, 235, 0.3);
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(135, 206, 235, 0.5);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #87CEEB, #4A90D9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            animation: slideIn 0.5s;
+            z-index: 1000;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>For Her ❤️</h1>
+        <p class="subtitle">My cutie, my love</p>
+
+        <div class="heart" id="heart"></div>
+
+        <button class="button" onclick="sendSignal('miss')">I miss you 💛</button>
+        <button class="button" onclick="sendSignal('love')">I love you ❤️</button>
+
+        <p style="margin-top: 20px; color: #ccc;">
+            When she presses, your heart will glow.
+        </p>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBnQH0dHRHTiSG1mCEp6uL4IIbALs-LrCc",
+            authDomain: "you1-7df26.firebaseapp.com",
+            databaseURL: "https://you1-7df26-default-rtdb.firebaseio.com",
+            projectId: "you1-7df26",
+            storageBucket: "you1-7df26.firebasestorage.app",
+            messagingSenderId: "453777685720",
+            appId: "1:453777685720:web:000364a3ce6d6cab29ebad"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Слушаем сигналы от неё
+        const herSignalRef = ref(db, 'my_signal');
+        onValue(herSignalRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data && data.timestamp) {
+                const now = Date.now();
+                if (now - data.timestamp < 5000) {
+                    showNotification("She misses you ❤️");
+                    document.getElementById('heart').classList.add('active');
+                    setTimeout(() => {
+                        document.getElementById('heart').classList.remove('active');
+                    }, 1000);
+                }
+            }
+        });
+
+        // Отправляем сигнал ей
+        window.sendSignal = function(type) {
+            const signalRef = ref(db, 'her_signal');
+            set(signalRef, {
+                type: type,
+                timestamp: Date.now()
+            });
+            showNotification("Sent! She will see it ❤️");
+        };
+
+        function showNotification(text) {
+            const notif = document.createElement('div');
+            notif.className = 'notification';
+            notif.textContent = text;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
