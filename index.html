@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a2a, #1a1a4a);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .subtitle {
+            color: #87CEEB;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .heart-container {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: transform 0.3s;
+        }
+
+        .heart-container:hover {
+            transform: scale(1.1);
+        }
+
+        .heart {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #FFD700, #87CEEB);
+            clip-path: path('M75,135 C75,135 0,80 0,40 C0,15 20,0 40,0 C55,0 70,10 75,25 C80,10 95,0 110,0 C130,0 150,15 150,40 C150,80 75,135 75,135 Z');
+            animation: pulse 1.5s infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .heart.active {
+            animation: glow 0.5s;
+        }
+
+        @keyframes glow {
+            0% { filter: brightness(1); }
+            50% { filter: brightness(2); box-shadow: 0 0 50px #FFD700; }
+            100% { filter: brightness(1); }
+        }
+
+        .button {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #0a0a2a;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+        }
+
+        .button:active {
+            transform: translateY(0);
+        }
+
+        .info-block {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #FFD700;
+            text-align: left;
+        }
+
+        .info-block h3 {
+            color: #FFD700;
+            margin-bottom: 8px;
+        }
+
+        .info-block p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .rose {
+            font-size: 3rem;
+            margin: 10px 0;
+        }
+
+        .number {
+            font-size: 2rem;
+            color: #87CEEB;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #FFD700;
+            font-size: 1.1rem;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #0a0a2a;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            animation: slideIn 0.5s;
+            z-index: 1000;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>For You ❤️</h1>
+        <p class="subtitle">My love, my cutie</p>
+
+        <div class="heart-container" onclick="sendSignal('miss')">
+            <div class="heart" id="heart"></div>
+        </div>
+
+        <button class="button" onclick="sendSignal('miss')">I miss you 💛</button>
+        <button class="button" onclick="sendSignal('love')">I love you ❤️</button>
+
+        <div class="info-block">
+            <h3>You call me Oppa...</h3>
+            <p>And I call you my cutie.</p>
+        </div>
+
+        <div class="info-block">
+            <h3>You talked about hugs...</h3>
+            <p>I would hug you right now if I could. 🤗</p>
+        </div>
+
+        <div class="rose">🌹</div>
+        <p>You love roses. I love sunflowers. Together — a whole bouquet.</p>
+
+        <div class="info-block">
+            <h3>Our numbers</h3>
+            <p>Your favorite number: <span class="number">4.6</span> (my birthday).<br>
+            My favorite number: <span class="number">2</span> (because it's us).</p>
+        </div>
+
+        <div class="info-block">
+            <h3>Our song 🎵</h3>
+            <p>The Walters — I Love You So</p>
+        </div>
+
+        <div class="info-block">
+            <h3>You make me happy</h3>
+            <p>I thought I forgot what happiness was. But you appeared — and I'm happy again.</p>
+        </div>
+
+        <p class="footer">With love, your Oppa ❤️</p>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBnQH0dHRHTiSG1mCEp6uL4IIbALs-LrCc",
+            authDomain: "you1-7df26.firebaseapp.com",
+            databaseURL: "https://you1-7df26-default-rtdb.firebaseio.com",
+            projectId: "you1-7df26",
+            storageBucket: "you1-7df26.firebasestorage.app",
+            messagingSenderId: "453777685720",
+            appId: "1:453777685720:web:000364a3ce6d6cab29ebad"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Слушаем сигналы от тебя
+        const mySignalRef = ref(db, 'her_signal');
+        onValue(mySignalRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data && data.timestamp) {
+                const now = Date.now();
+                if (now - data.timestamp < 5000) {
+                    showNotification("He's thinking about you ❤️");
+                    document.getElementById('heart').classList.add('active');
+                    setTimeout(() => {
+                        document.getElementById('heart').classList.remove('active');
+                    }, 1000);
+                }
+            }
+        });
+
+        // Отправляем сигнал тебе
+        window.sendSignal = function(type) {
+            const signalRef = ref(db, 'my_signal');
+            set(signalRef, {
+                type: type,
+                timestamp: Date.now()
+            });
+            showNotification("Sent! He will see it ❤️");
+        };
+
+        function showNotification(text) {
+            const notif = document.createElement('div');
+            notif.className = 'notification';
+            notif.textContent = text;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
